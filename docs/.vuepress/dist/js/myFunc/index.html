@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>自定义封装方法 | My Blog</title>
+    <meta name="description" content="谢世勋的博客">
+    <link rel="icon" href="/my-blog/img/favicon.ico">
+    
+    <link rel="preload" href="/my-blog/assets/css/0.styles.7d4b9a77.css" as="style"><link rel="preload" href="/my-blog/assets/js/app.503de307.js" as="script"><link rel="preload" href="/my-blog/assets/js/2.047c59ef.js" as="script"><link rel="preload" href="/my-blog/assets/js/13.e000100a.js" as="script"><link rel="prefetch" href="/my-blog/assets/js/10.515d15b0.js"><link rel="prefetch" href="/my-blog/assets/js/11.50f8f95b.js"><link rel="prefetch" href="/my-blog/assets/js/12.1e46d0b1.js"><link rel="prefetch" href="/my-blog/assets/js/14.f1b130a7.js"><link rel="prefetch" href="/my-blog/assets/js/3.a80f4cd9.js"><link rel="prefetch" href="/my-blog/assets/js/4.fa54a981.js"><link rel="prefetch" href="/my-blog/assets/js/5.382eb170.js"><link rel="prefetch" href="/my-blog/assets/js/6.a6de659f.js"><link rel="prefetch" href="/my-blog/assets/js/7.aab33318.js"><link rel="prefetch" href="/my-blog/assets/js/8.7f4aa13c.js"><link rel="prefetch" href="/my-blog/assets/js/9.d13c6284.js">
+    <link rel="stylesheet" href="/my-blog/assets/css/0.styles.7d4b9a77.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/my-blog/" class="home-link router-link-active"><!----> <span class="site-name">My Blog</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/my-blog/" class="nav-link">主页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="博文" class="dropdown-title"><span class="title">博文</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/my-blog/css/" class="nav-link">css</a></li><li class="dropdown-item"><!----> <a href="/my-blog/js/" class="nav-link router-link-active">js</a></li></ul></div></div><div class="nav-item"><a href="/my-blog/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="https://github.com/xunloveo" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/my-blog/" class="nav-link">主页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="博文" class="dropdown-title"><span class="title">博文</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/my-blog/css/" class="nav-link">css</a></li><li class="dropdown-item"><!----> <a href="/my-blog/js/" class="nav-link router-link-active">js</a></li></ul></div></div><div class="nav-item"><a href="/my-blog/about/" class="nav-link">关于</a></div><div class="nav-item"><a href="https://github.com/xunloveo" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/my-blog/js/" class="sidebar-link">javascript概括总览</a></li><li><a href="/my-blog/js/myFunc/" class="active sidebar-link">自定义封装方法</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/my-blog/js/myFunc/#洗牌函数" class="sidebar-link">洗牌函数</a></li><li class="sidebar-sub-header"><a href="/my-blog/js/myFunc/#js给元素设置兼容前缀" class="sidebar-link">js给元素设置兼容前缀</a></li><li class="sidebar-sub-header"><a href="/my-blog/js/myFunc/#css-一些操作" class="sidebar-link">css 一些操作</a></li><li class="sidebar-sub-header"><a href="/my-blog/js/myFunc/#list转为tree" class="sidebar-link">list转为tree</a></li><li class="sidebar-sub-header"><a href="/my-blog/js/myFunc/#函数柯里化" class="sidebar-link">函数柯里化</a></li><li class="sidebar-sub-header"><a href="/my-blog/js/myFunc/#自定义new" class="sidebar-link">自定义new</a></li></ul></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="自定义封装方法"><a href="#自定义封装方法" class="header-anchor">#</a> 自定义封装方法</h1> <h2 id="洗牌函数"><a href="#洗牌函数" class="header-anchor">#</a> 洗牌函数</h2> <div class="language- extra-class"><pre class="language-text"><code>随机获取给定区间的值
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+洗牌函数 随机改变数组
+function shuffle(arr) {
+    let _arr = arr.slice()
+    for (let i =0; i &lt; arr.length; i++) {
+        let j = getRandomInt(0, i)
+        let t = _arr[i]
+        _arr[i] = _arr[j]
+        _arr[j] = t
+    }
+    return _arr
+}
+
+</code></pre></div><h2 id="js给元素设置兼容前缀"><a href="#js给元素设置兼容前缀" class="header-anchor">#</a> js给元素设置兼容前缀</h2> <div class="language- extra-class"><pre class="language-text"><code>let elementStyle = document.createElement('div').style
+
+let vendor = (() =&gt; {
+  let transformNames = {
+    webkit: 'webkitTransform',
+    Moz: 'MozTransform',
+    O: 'OTransform',
+    ms: 'msTransform',
+    standard: 'transform'
+  }
+
+  for (let key in transformNames) {
+    if (elementStyle[transformNames[key]] !== undefined) {
+      return key
+    }
+  }
+
+  return false
+})()
+
+export function prefixStyle(style) {
+  if (vendor === false) {
+    return false
+  }
+
+  if (vendor === 'standard') {
+    return style
+  }
+
+  return vendor + style.charAt(0).toUpperCase() + style.substr(1)
+}
+</code></pre></div><h2 id="css-一些操作"><a href="#css-一些操作" class="header-anchor">#</a> css 一些操作</h2> <div class="language- extra-class"><pre class="language-text"><code>// 判断是否有这个类名
+export function hasClass(el, className) {
+      let reg = new RegExp('(^|\\s)' + className + '(\\s|$)')
+      return reg.test(el.className)
+    }
+ 
+// 添加类名  
+export function addClass(el, className) {
+  if (hasClass(el, className)) {
+    return
+  }
+
+  let newClass = el.className.split(' ')
+  newClass.push(className)
+  el.className = newClass.join(' ')
+}
+
+// 设置或者获取data-
+export function getData(el, name, val) {
+  const prefix = 'data-'
+  if (val) {
+    return el.setAttribute(prefix + name, val)
+  }
+  return el.getAttribute(prefix + name)
+}
+</code></pre></div><h2 id="list转为tree"><a href="#list转为tree" class="header-anchor">#</a> list转为tree</h2> <div class="language- extra-class"><pre class="language-text"><code>/**
+ * 以下数据结构中，id 代表部门编号，name 是部门名称，parentId 是父部门编号，为 0 代表一级部门，现在要求实现一个 convert 方法，把原始 list 转换成树形结构，parentId 为多少就挂载在该 id 的属性 children 数组下，结构如下：
+
+// 原始 list 如下
+let list =[
+    {id:1,name:'部门A',parentId:0},
+    {id:2,name:'部门B',parentId:0},
+    {id:3,name:'部门C',parentId:1},
+    {id:4,name:'部门D',parentId:1},
+    {id:5,name:'部门E',parentId:2},
+    {id:6,name:'部门F',parentId:3},
+    {id:7,name:'部门G',parentId:2},
+    {id:8,name:'部门H',parentId:4}
+];
+const result = convert(list, ...);
+
+// 转换后的结果如下
+let result = [
+    {
+      id: 1,
+      name: '部门A',
+      parentId: 0,
+      children: [
+        {
+          id: 3,
+          name: '部门C',
+          parentId: 1,
+          children: [
+            {
+              id: 6,
+              name: '部门F',
+              parentId: 3
+            }, {
+              id: 16,
+              name: '部门L',
+              parentId: 3
+            }
+          ]
+        },
+        {
+          id: 4,
+          name: '部门D',
+          parentId: 1,
+          children: [
+            {
+              id: 8,
+              name: '部门H',
+              parentId: 4
+            }
+          ]
+        }
+      ]
+    },
+  ···
+];
+ */
+
+function convert(list) {
+	const res = []
+	const map = list.reduce((res, v) =&gt; (res[v.id] = v, res), {})
+	for (const item of list) {
+		if (item.parentId === 0) {
+			res.push(item)
+			continue
+		}
+		if (item.parentId in map) {
+			const parent = map[item.parentId]
+			parent.children = parent.children || []
+			parent.children.push(item)
+		}
+	}
+	return res
+}
+
+let list = [
+    {id:1,name:'部门A',parentId:0},
+    {id:2,name:'部门B',parentId:0},
+    {id:3,name:'部门C',parentId:1},
+    {id:4,name:'部门D',parentId:1},
+    {id:5,name:'部门E',parentId:2},
+    {id:6,name:'部门F',parentId:3},
+    {id:7,name:'部门G',parentId:2},
+    {id:8,name:'部门H',parentId:4}
+]
+
+console.log(convert(list))
+</code></pre></div><h2 id="函数柯里化"><a href="#函数柯里化" class="header-anchor">#</a> 函数柯里化</h2> <div class="language- extra-class"><pre class="language-text"><code>/**
+ * 函数柯里化实现
+ * 
+ */
+
+function currying(fn, length) {
+	length = length || fn.length // 第一次调用函数fn参数的长度， 后续调用获取fn剩余参数的长度
+	return function (...args) {
+		console.log(args.length, length)
+		return args.length &gt;= length 
+			? fn.apply(this, args)
+			: currying(fn.bind(this, ...args), length - args.length)
+	}
+}
+
+// es6 简化版
+const simpleCurrying = fn =&gt;
+	judge = (...args) =&gt; 
+		args.length &gt;= fn.length
+			? fn(...args)
+			: (...arg) =&gt; judge(...args, ...arg)
+
+// test 
+const fn = currying(function(a, b, c) {
+	console.log([a, b, c])
+})
+
+// fn(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)
+// fn(&quot;a&quot;, &quot;b&quot;)(&quot;c&quot;)
+// fn(&quot;a&quot;)(&quot;b&quot;)(&quot;c&quot;)
+
+const f1 = simpleCurrying((a, b, c) =&gt;
+	console.log([a, b, c])
+)
+f1(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)
+f1(&quot;a&quot;)(&quot;b&quot;, &quot;c&quot;)
+f1(&quot;a&quot;, &quot;c&quot;)(&quot;b&quot;)
+f1(&quot;a&quot;)(&quot;b&quot;)(&quot;c&quot;)
+</code></pre></div><h2 id="自定义new"><a href="#自定义new" class="header-anchor">#</a> 自定义new</h2> <div class="language- extra-class"><pre class="language-text"><code>/**
+ * 实现new的思路：
+ * 	1. 首先创建一个空的对象，空对象的_proto_属性指向构造函数的原型对象
+ * 	2. 把上面的空对象赋值构造函数内部的this,用构造函数内部的方法修改空对象
+ * 	3. 如果构造函数返回一个非基本类型的值，则返回这个值， 否则返回上面创建的对象
+*/
+function _new (fn, ...arg) {
+	const obj = Object.create(fn.prototype)
+	const ret = fn.apply(obj, arg)
+	return ret instanceof Object ? ret : obj
+}
+
+// test
+let Dog = function(name) {
+	this.name = name
+}
+Dog.prototype.bark = function() {
+	console.log('bark')
+}
+Dog.prototype.sayName = function () {
+	console.log(`My name is ${this.name}`)
+}
+
+let dog = _new(Dog, 'simao')
+dog.bark()
+dog.sayName()
+console.log(dog instanceof Dog) // true
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/my-blog/js/" class="prev router-link-active">javascript概括总览</a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/my-blog/assets/js/app.503de307.js" defer></script><script src="/my-blog/assets/js/2.047c59ef.js" defer></script><script src="/my-blog/assets/js/13.e000100a.js" defer></script>
+  </body>
+</html>
