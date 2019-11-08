@@ -6,13 +6,14 @@ module.exports = {
 		['link', {rel: 'icon', href: '/img/favicon.ico'}]
 	],
 	themeConfig: {
-		displayAllHeaders: true,
+		displayAllHeaders: false,
 		nav: [
 			{text: '主页', link: '/'},
 			{text: '博文', 
 				items: [
 					{text: 'css', link: '/css/'},
-					{text: 'js', link: '/js/'}
+					{text: 'js', link: '/js/'},
+					{text: 'md', link: '/md/'}
 				]
 			},
 			{
@@ -29,9 +30,12 @@ module.exports = {
 			],
 			'/js/': [
 				"",	
-				"/js/myFunc/"
+				"myFunc/",
+				"cs"
 			],			
-			
+			'/md/': [
+				""
+			]
 		}
 	} 
 }

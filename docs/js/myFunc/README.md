@@ -249,6 +249,107 @@ dog.sayName()
 console.log(dog instanceof Dog) // true
 ```
 
+## 自定义实现call
+```javascript
+Function.prototype.myCall = function (ctx) {
+  let context = ctx || window
+  // getValue.call(a, 'yck', '24') => a.fn = getValue
+  context.fn = this
+  // 取出后面的参数
+  let args = [...arguments].slice(1)
+  // getValue.call(a, 'yck', '24') => a.fn('yck', 24)
+  let result = context.fn(...args)
+  // 删除 fn
+  delete context.fn
+
+  return result
+}
+
+let a = {
+  value: 1
+}
+
+function getValue(name, age) {
+  console.log(name)
+  console.log(age)
+  console.log(this.value)
+}
+
+getValue.call(a, 'yck', '24')
+getValue.myCall(a, 'xx', 25)
+```
+
+## 自定义实现apply
+```javascript
+Function.prototype.myApply = function (ctx) {
+  let context = ctx || window
+  context.fn = this
+  let result
+  if (arguments[1]) {
+    result = context.fn(...arguments[1])
+  } else {
+    result = context.fn()
+  }
+
+  delete context.fn
+
+  return result
+}
+
+// test 
+
+let a = {
+  value: 1
+}
+
+function getValue(name, age) {
+  console.log(name)
+  console.log(age)
+  console.log(this.value)
+}
+
+getValue.apply(a, ['yck', '24'])
+getValue.myApply(a, ['yck', '24'])
+```
+
+## 自定义实现bind
+```javascript
+Function.prototype.myBind = function (ctx) {
+  if (typeof this !== 'function') {
+    throw new TypeError('Error')
+  }
+
+  let _this = this
+
+  let args = [...arguments].slice(1)
+  // 返回一个函数
+  return function F() {
+    console.log(this, F, this instanceof F)
+    // 进行类型判断
+    if (this instanceof F) {
+      return new _this(...args, ...arguments)
+    }
+    return _this.apply(ctx, args.concat(...arguments))
+  }
+}
+
+a = {
+  name: 'xx'
+}
+
+name = 'aa'
+
+function test(arg) {
+  console.log(this.name, arg)
+}
+
+test(111)
+test.bind(a, 'ssss')()
+test.myBind(a, 'qqqq')()
+
+new test('11').bind
+```
+
 ## 实现深拷贝
 ```javascript
 function deepClone (obj) {
@@ -326,6 +427,225 @@ function browserType(){
     if (isOpera) return "Opera";
     if (isSafari) return "Safari";
     if (isChrome) return "Chrome";
+}
+```
+
+## 货币格式化
+```javascript
+const digitsRE = /(\d{3})(?=\d)/g
+
+/**
+ *  
+ * @param  {[type]} value    [description] 货币值
+ * @param  {[type]} currency [description] 默认为$
+ * @param  {[type]} decimals [description] 小数默认2位
+ * @return {[type]}          [description]
+ */
+export function currency (value, currency, decimals) {
+  value = parseFloat(value)
+  if (!isFinite(value) || (!value && value !== 0)) return ''
+  currency = currency != null ? currency : '$'
+  decimals = decimals != null ? decimals : 2
+  let stringified = Math.abs(value).toFixed(decimals)
+  let _int = decimals
+    ? stringified.slice(0, -1 - decimals)
+    : stringified
+  let i = _int.length % 3
+  let head = i > 0
+    ? (_int.slice(0, i) + (_int.length > 3 ? ',' : ''))
+    : ''
+  let _float = decimals
+    ? stringified.slice(-1 - decimals)
+    : ''
+  let sign = value < 0 ? '-' : ''
+  return sign + currency + head +
+    _int.slice(i).replace(digitsRE, '$1,') +
+    _float
+}
+```
+
+## 防抖
+```javascript
+/**
+ * 防抖函数，返回函数连续调用时， 空闲时间必须大于或等于 wait, func 才会执行
+ *
+ * @param {*} func 回调函数
+ * @param {number} [wait=50] 时间间隔
+ * @param {boolean} [immediate=true] 是否立即调用
+ * @return {function} 返回客户调用函数
+ */
+function debounce(func, wait = 50, immediate = true) {
+  let timer, context, args
+
+  // 延迟执行函数
+  const later = () => setTimeout(() => {
+    // 延迟函数执行完毕， 清空缓存的定时器序号
+    timer = null
+
+    // 延迟执行的情况下，函数会在延迟函数中执行
+    // 使用到之前缓存的参数和上下文
+    if (!immediate) {
+      func.apply(context, args)
+      context = args = null
+    }
+  }, wait)
+
+  // 返回函数是每次实际调用的函数
+  return function (...params) {
+    // 如果没有创建延迟执行函数
+    if (!timer) {
+      timer = later()
+      // 如果是立即执行函数，调用函数
+      // 否则缓存参数和调用上下文
+      if (immediate) {
+        func.apply(this, params)
+      } else {
+        context = this
+        args = params
+      }
+    } else {
+      // 如果有延迟执行函数， 调用的时候清除原来的并重新设定一个
+      clearTimeout(timer)
+      timer = later()
+    }
+  }
+}
+```
+
+## 节流
+```javascript
+// 获取当前时间
+function _now() {
+  return +new Date()
+}
+
+/**
+ *
+ *
+ * @param {*} func 回调函数
+ * @param {*} wait 时间间隔
+ * @param {*} [options={}] 如果想忽略开始函数的调用， 传入 {leading: false}
+ *                         如果想忽略结尾函数的调用， 传入 { trailing: false}
+ *                         两者不能共存，否则函数不能执行 *                         
+ * @returns                返回库户调用函数
+ */
+function throttle(func, wait, options = {}) {
+  let context, args, result
+  let timeout = null
+  // 之前的时间戳
+  let previous = 0
+
+  // 定时器回调函数
+  const later = () => {
+    // 如果设置了leading, 就将previous 设为0
+    // 用于下面函数的第一个 if 判断
+    previous = options.leading === false ? 0 : _now()
+    timeout = null
+    result = func.apply(context, args)
+    if (!timeout) context = args = null
+  }
+
+  return function (...args) {
+    // 获取当前时间戳
+    let now = _now()
+    // 首次进入前者肯定为true
+    // 如果需要第一次不执行函数
+    // 就将上次时间戳设为当前的
+    // 这样在接下来计算remaining 的值是会大于0
+    if (!previous && options.leading === false) previous = now
+    // 计算剩余时间
+    let remaining = wait - (now - previous)
+    console.log('r', remaining)
+    context = this
+    args = args
+
+    // 如果当前调用已经大于上次调用时间 + wait
+    // 或者用户手动调了时间
+    // 如果设置了 trailing, 只会进入这个条件
+    // 如果没有设置 leading, 那么第一次会进入这个条件
+    // 还有一点， 你可能觉得开启了定时器 那么应该就不会进入这个if 条件了
+    // 其实还是会进入的 因为定时器的延时
+    // 并不是准确的时间， 很可能你设置了2秒
+    // 但是她需要2.2秒才触发， 这时候就会进入这个条件
+
+    if (remaining <= 0 || remaining > wait) {
+      if (timeout) {
+        clearTimeout(timeout)
+        timeout = null
+      }
+      previous = now
+      result = func.apply(context, args)
+      if (!timeout) context = args = null
+    } else if (!timeout && options.trailing !== false) {
+      timeout = setTimeout(later, remaining);
+    }
+    console.log('re', result)
+    return result
+  }
+}
+```
+
+## 时间格式化
+```javascript
+let SIGN_REGEXP = /([yMdhsm])(\1*)/g;
+let DEFAULT_PATTERN = 'yyyy-MM-dd';
+function padding(s, len) {
+    let len = len - (s + '').length;
+    for (var i = 0; i < len; i++) { s = '0' + s; }
+    return s;
+};
+
+export default {    
+    formatDate: {
+        format: function (date, pattern) {
+            pattern = pattern || DEFAULT_PATTERN;
+            return pattern.replace(SIGN_REGEXP, function ($0) {
+                switch ($0.charAt(0)) {
+                    case 'y': return padding(date.getFullYear(), $0.length);
+                    case 'M': return padding(date.getMonth() + 1, $0.length);
+                    case 'd': return padding(date.getDate(), $0.length);
+                    case 'w': return date.getDay() + 1;
+                    case 'h': return padding(date.getHours(), $0.length);
+                    case 'm': return padding(date.getMinutes(), $0.length);
+                    case 's': return padding(date.getSeconds(), $0.length);
+                }
+            });
+        },
+        parse: function (dateString, pattern) {
+            let matchs1 = pattern.match(SIGN_REGEXP);
+            let matchs2 = dateString.match(/(\d)+/g);
+            if (matchs1.length == matchs2.length) {
+                let _date = new Date(1970, 0, 1);
+                for (let i = 0; i < matchs1.length; i++) {
+                    let _int = parseInt(matchs2[i]);
+                    let sign = matchs1[i];
+                    switch (sign.charAt(0)) {
+                        case 'y': _date.setFullYear(_int); break;
+                        case 'M': _date.setMonth(_int - 1); break;
+                        case 'd': _date.setDate(_int); break;
+                        case 'h': _date.setHours(_int); break;
+                        case 'm': _date.setMinutes(_int); break;
+                        case 's': _date.setSeconds(_int); break;
+                    }
+                }
+                return _date;
+            }
+            return null;
+        }
+    }
+}
+```
+
+## 查询地址栏的参数
+```javascript
+function getQueryStringByName (name) {
+  let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+  let r = window.location.search.substr(1).match(reg);
+  let context = "";
+  if (r != null) context = r[2];
+  reg = null;
+  r = null;
+  return context == null || context == "" || context == "undefined" ? "" : context;
 }
 ```
 
