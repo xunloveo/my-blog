@@ -94,70 +94,78 @@
 		transform: rotate(-360deg)
 	}
 }
+@media (max-width: 1220px)
+	.knowledge 
+		display: none
+@media (min-width: 1221px)
 	.home-container
 		position: absolute
 		top: 50%
 		left: 50%
 		transform: translate(-50%, -50%)
 		margin-top: 0 !important
-		
 
 		.text
 			transform: translate(200px, 0)
-			padding: 1.25rem 0.625rem
-			box-shadow: 0 2px 12px 0 rgba(0,0,0,.1)
 
-		p 
-			text-indent: 2em
-			line-height: 2rem
-			font-size: 1.25rem
-		
-		.knowledge
+.home-container	
+
+	.text		
+		padding: 1.25rem 0.625rem
+		box-shadow: 0 2px 12px 0 rgba(0,0,0,.1)
+
+	p 
+		text-indent: 2em
+		line-height: 2rem
+		font-size: 1.25rem
+
+	
+	.knowledge
+		width: 320px
+		height: 320px
+		padding: 30px
+		overflow: hidden
+		position: absolute			
+		top: 50%
+		transform: translate(-80%, -50%)
+
+	.knowledge-container
+		width: 100%
+		height: 320px
+		position: absolute
+		left: 0
+		top: 30px
+		transform-origin: center
+		animation: move 8s linear infinite
+
+		.circle
 			width: 320px
 			height: 320px
-			padding: 30px
-			overflow: hidden
-			position: absolute			
-			top: 50%
-			transform: translate(-80%, -50%)
-
-		.knowledge-container
-			width: 100%
-			height: 320px
+			border-radius: 50%
+			border: 1px solid #ddd
 			position: absolute
 			left: 0
-			top: 30px
-			transform-origin: center
-			animation: move 8s linear infinite
+			right: 0
+			top: 0
+			bottom: 0
+			margin: auto
 
-			.circle
-				width: 320px
-				height: 320px
+		.knowledge-list 
+			width: 100%
+			height: 100%
+			position: absolute
+			left: 50%
+			top: 50%			
+
+			.knowledge-item 
+				width: 60px
+				height: 60px
+				background: #00adb5
 				border-radius: 50%
-				border: 1px solid #ddd
+				text-align: center
+				line-height: 60px
+				color: #fff
 				position: absolute
-				left: 0
-				right: 0
-				top: 0
-				bottom: 0
-				margin: auto
-
-			.knowledge-list 
-				width: 100%
-				height: 100%
-				position: absolute
-				left: 50%
-				top: 50%			
-
-				.knowledge-item 
-					width: 60px
-					height: 60px
-					background: #00adb5
-					border-radius: 50%
-					text-align: center
-					line-height: 60px
-					color: #fff
-					position: absolute
-					animation: move1 8s linear infinite
+				animation: move1 8s linear infinite
 </style>
 

@@ -1,19 +1,21 @@
 module.exports = {
-	title: 'My Blog',
+	title: '谢世勋博客',
 	description: '谢世勋的博客',
 	base: '/my-blog/',
 	head: [
 		['link', {rel: 'icon', href: '/img/favicon.ico'}]
 	],
 	themeConfig: {
-		displayAllHeaders: false,
+		displayAllHeaders: false, //显示所有标题
 		nav: [
 			{text: '主页', link: '/'},
 			{text: '博文', 
 				items: [
-					{text: 'css', link: '/css/'},
-					{text: 'js', link: '/js/'},
-					{text: 'md', link: '/md/'}
+					{text: 'CSS', link: '/css/'},
+					{text: 'Javascript', link: '/js/'},
+					{text: 'Git', link: '/git/'},
+					{text: 'Markdown', link: '/md/'},
+					{text: '编辑器', link: '/editor/'}
 				]
 			},
 			{
@@ -23,6 +25,7 @@ module.exports = {
 				text: 'Github', link: 'https://github.com/xunloveo'
 			}
 		],
+		// sidebar: 'auto'
 		sidebar: {
 			'/css/': [
 				"",
@@ -30,12 +33,21 @@ module.exports = {
 			],
 			'/js/': [
 				"",	
+				"useMore/",
 				"myFunc/",
-				"cs"
+				"reg"
+			],
+			'git': [
+				""
 			],			
 			'/md/': [
 				""
+			],
+			'/editor/':[
+				"",
+				"vscode/"
 			]
-		}
+		},
+		smoothScroll: true
 	} 
 }
